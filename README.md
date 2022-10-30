@@ -19,8 +19,7 @@
  moodle name
 
   PICTURE of the ERD diagram
-  ERD_diagram.jpg
-  https://github.com/A00279521/Moodle-Registration/blob/main/ERD_diagram.jpg
+  
  
  
  
