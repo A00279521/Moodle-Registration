@@ -1,0 +1,26 @@
+<html>
+    <body>
+        <h1>
+            This is a Fabulous test
+        </h1>
+        <table>
+        {% for val in res %}
+        <tr>
+        <td>The student id is: {{ val.student_id}}</td>
+        <td>The student surname is: {{ val.surname }}</td>
+        <td>The student  first name is: {{ val.firstName}}</td> 
+        </tr>
+         {% endfor %}
+        </table> 
+                <!-- <div class='form'>
+            <form method='POST' action=''>
+                {{ jiform.hidden_tag() }}
+                {{ jiform.NameForm.Stud_id}} {{jiform.NameForm.SName}} {{jiform.NameForm.FName}}
+                {{ jisubjectform.subjlist }}
+                {{ jiform.submit }} -->
+        <!-- End of Form -->
+
+         {% block disclaimer %}
+         {% endblock disclaimer %}
+    </body>
+</html>
