@@ -3,18 +3,19 @@ from application.models import student,moodle
 from flask import request, redirect, url_for
 from flask import render_template
 from flask_wtf import FlaskForm
+#from flask import flask_wtf,wtforms
 from wtforms import StringField, SubmitField
-from application.forms import NameForm
+from application.forms import NameForm, DelForm
 
-@app.route('/', methods = ['GET','POST'])
+@app.route('/', methods = ['GET','POST','DELETE'])
 def read():
     # query list of staff from db
     #pystaff = Staff.query.join(Subjects).all()
-    all_students = student.query.all()
+    pyall_students = student.query.all()
     # query subjects
     #pysubjects = Subjects.query.all()
-    all_moodle = moodle.query.all()
-    # instantiate empty subject form
+    pyall_moodle = moodle.query.all()
+    # instantiate empty subject form 
     # pysubjectform = SubjectList()
     # # append query to choices
     # for subj in pysubjects:
@@ -22,32 +23,34 @@ def read():
     #        (subj.id,subj.subject_name)
     #     )
 
-    # instantiate staff input form
-    studentform = NameForm()
-
+    # instantiate student input form so that i can use it
+    pystudentform = NameForm()
+    pydelstudentform=DelForm()
     # Grab stuff from the POST
     if request.method == 'POST':
         # WTForms adds the data to the forms we created, then we retrieve it and 
         # put it into a database object
-        addstudent = student(student_id=studentform.Stud_id.data, surname=studentform.SName.data,firstName=studentform.FName.data )
+        addstudent = student(student_id=pystudentform.Stud_id.data, surname=pystudentform.SName.data,firstName=pystudentform.FName.data )
         schooldb.session.add(addstudent)
         schooldb.session.commit()
         #breakpoint()
         # Send the user back to the frontpage
+
+    #****************DELETE ENTRY FROM THE STUDENT TABLE*******************
+    if request.method == 'DELETE':
+        # WTForms adds the data to the forms we created, then we retrieve it and 
+        # put it into a database object
+        delmoodle = moodle(studentbr=pydelstudentform.Stud_id.data)
+        schooldb.session.delete(delmoodle)
+        schooldb.session.commit()
+        delstudent = student(student_id=pydelstudentform.Stud_id.data)
+        schooldb.session.delete(delstudent)
+        schooldb.session.commit()
+
         return redirect(url_for('read'))
+    return render_template('front.html', ji_all_student=pyall_students, jistudentform=pystudentform,
+                          ji_all_moodle=pyall_moodle, jidelstudentform=pydelstudentform )
 
-
-#    breakpoint()
-    return render_template('front.html', jistaff=all_students, jiform=studentform, jisubjectform=all_moodle )
-
-
-# @app.route('/', methods=["GET","POST"])
-# def hello_internet():
-#      if request.method == "POST":
-#           return "2Hello Internet!"
-#      else:
-#          return render_template('front.html')
-#         #return "hello worldtest  2"
 
 #************GET ALL STUDENT FROM DATABASE*******************************************
 @app.route('/students', methods=["GET"])
@@ -144,5 +147,18 @@ def update(str1,str2,str3):
 #     crud_db.session.commit()
 #     return first_game.name
  # result= student(student_id=val1.student_id ,surname= val1.surname,firstName=val1.firstName)/database
+
+ #***********************************************************************************************************
+
+ #****************DELETE ENTRY FROM DATABASE***************************************************************
+
+# @app.route('/<st_id>', methods=["DELETE"])
+# def read_stud_mod(st_id):
+#     val1=moodle.query.filter_by(student_id=st_id).all()
+#     result =" "
+#     for k in range(len(val1)):
+#         result+= f"{val1[k].moodle_id} {val1[k].moodleName}\n"
+#     return result
+# #******************
 
 
