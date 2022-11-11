@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Todolist</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" type="text/css"/>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>    
+        <script src="https://getbootstrap.com/assets/js/vendor/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <body>
+                <div class="card-header text-center" style ="background-color:rgb(255, 0, 47);">
+                  <h1> This is a Fabulous test</h1>
+                </div>
+                 <div class="card-header text-center">
+                        <table>
+                            <h1> STUDENT TABLE</h1>
+                             {% for val in ji_student %}
+                                <tr>
+                                    <td>Student id : {{ val.student_id}}</td>
+                                    <td>Surname : {{ val.surname }}</td>
+                                    <td>First name is: {{ val.firstName}}</td>
+                                 </tr>
+                             {% endfor %}
+                        </table> 
+                        <div class="card-header text-center">
+                            <table>
+                                <h1> MOODLE TABLE</h1>
+                                 {% for val in ji_moodle %}
+                                    <tr>
+                                        <td>moodle id : {{ val.moodle_id}}</td>
+                                        <td>Moodle Name : {{ val.moodleName }}</td>
+                                        <td>Student id is: {{ val.student_id}}</td> 
+                                     </tr>
+                                 {% endfor %}
+                            </table> 
+                          
+                    </div>
+          {% block body %}
+          {% endblock body %}
+    </body>
+</html>

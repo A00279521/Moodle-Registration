@@ -14,11 +14,15 @@ class DelForm(FlaskForm): #like creating a database version
     Stud_id = StringField("Student Id")
     delete = SubmitField("Delete")
 
-# class SubjectList(FlaskForm):
+class SinForm(FlaskForm): #like creating a database version
+    Stud_id = StringField("Student Id")
+    submit = SubmitField("Submit")
+
+# class ListOption(FlaskForm):
 #     subjlist = SelectField("Subject List", choices=[])
 #     submit = SubmitField("Submit")
 
 
-# class exampleSelectField(FlaskForm):
-#     list = SelectField("Farm Animals", choices=['Submit','Delete','Show All'])
-#     submit = SubmitField("Submit")
+class SelectFieldForm(FlaskForm):
+    list = SelectField("SELECT ONE", choices=['All Student Page','All Moodle Page','Register A Student','Register A Moodle','Delete A Student','Home Page','Enter Student ID'])
+    submit = SubmitField("Submit")
