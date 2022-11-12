@@ -16,11 +16,11 @@
                  <div class="card-header text-center">
                         <table>
                             <h1> STUDENT DETAILS</h1>
-                            {% for val in ji_student %}
-                              Student id : {{ val.student_id}}<br>
-                              Surname : {{ val.surname }}<br>
-                              First name is: {{ val.firstName}}<br>
-                             {% endfor %}
+
+                              Student id : {{ ji_student.student_id}}<br>
+                              Surname : {{ ji_student.surname }}<br>
+                              First name is: {{ ji_student.firstName}}<br>
+
                         </table> 
                         <div class="card-header text-center">
                             <table>
@@ -39,7 +39,24 @@
                                {{ jioptionform.submit }}  
                              </div>
                            </form>
-                        </div>      
+                        </div>  
+                        <div class='form'>
+                            <form method='POST' action=''>
+                               {{ jistudentform.hidden_tag() }}
+                             <div class="form-group" >
+                               {{ jistudentform.Stud_id.label}} {{ jistudentform.Stud_id}} 
+                             </div>
+                             <div class="form-group">
+                               {{jistudentform.SName.label}} {{jistudentform.SName}}
+                             </div>
+                             <div class="form-group">
+                               {{jistudentform.FName.label}} {{jistudentform.FName}}
+                             </div>
+                             <div class="form-group">
+                              {{ jistudentform.submit }}
+                             </div>
+                         </form>
+                        </div>
           {% block body %}
           {% endblock body %}
     </body>

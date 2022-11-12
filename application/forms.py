@@ -18,11 +18,11 @@ class SinForm(FlaskForm): #like creating a database version
     Stud_id = StringField("Student Id")
     submit = SubmitField("Submit")
 
-# class ListOption(FlaskForm):
-#     subjlist = SelectField("Subject List", choices=[])
-#     submit = SubmitField("Submit")
+class MoodList(FlaskForm):
+    subjlist = SelectField("Subject List", choices=[])
+    submit = SubmitField("Submit")
 
 
 class SelectFieldForm(FlaskForm):
-    list = SelectField("SELECT ONE", choices=['All Student Page','All Moodle Page','Register A Student','Register A Moodle','Delete A Student','Home Page','Enter Student ID'])
+    list = SelectField("SELECT ONE", choices=['All Student Page','All Moodle Page','Register A Student','Register A Moodle','Delete A Student','Home Page','Enter Student ID','Update' ])
     submit = SubmitField("Submit")
