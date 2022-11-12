@@ -1,25 +1,25 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 
-# # Form definitions for web input
-
-class NameForm(FlaskForm): #like creating a database version
+class NameForm(FlaskForm):
     Stud_id = StringField("Student Id")
     SName = StringField("Surname")
     FName = StringField("firstName")
     submit = SubmitField("Submit")
-    #delete = SubmitField("Delete")
 
-class DelForm(FlaskForm): #like creating a database version
+class DelForm(FlaskForm): 
     Stud_id = StringField("Student Id")
     delete = SubmitField("Delete")
+    submit = SubmitField("Exit")
 
-class SinForm(FlaskForm): #like creating a database version
+class SinForm(FlaskForm): 
     Stud_id = StringField("Student Id")
     submit = SubmitField("Submit")
 
-class MoodList(FlaskForm):
-    subjlist = SelectField("Subject List", choices=[])
+class MoodleForm(FlaskForm):
+    Stud_id = StringField("Student Id")
+    Modcode = StringField("Code List")
+    Subname = StringField("Subject List")
     submit = SubmitField("Submit")
 
 
