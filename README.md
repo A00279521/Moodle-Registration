@@ -20,6 +20,17 @@
 
   PICTURE of the ERD diagram
   https://github.com/A00279521/Moodle-Registration/blob/photoBranch/ERD_diagram.png
- 
- 
+  
+ ##ADDITIONAL REQUIREMENT FROM PRODUCT OWNER
+   * After the MVP the product owner has requested further fuctionality as listed below
+   * The ability to delete a student from the student table 
+   * The ability to update/modify the student table 
+   * The ability to display all registered student in the database
+   * The ability to display all registered moodles in the database
+   * The student ID must be 8 characters long and can only start with letter 'x' followed by 7 numbers
+   * Deleting from the student database must be validated b re-entering the student ID twice
+   * The intention is to create a login page for all users at a letter sprint 
+   * Navigating across different pages should be very easy using different options
+   * The student ID in the student table should be the foreign key in the moodle table but not necessary the primary key
+    
  
