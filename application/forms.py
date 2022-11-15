@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Length, Regexp, ValidationError
+from wtforms.validators import DataRequired, Length, Regexp, EqualTo, ValidationError
 
 
 class NameForm(FlaskForm):
@@ -8,11 +8,11 @@ class NameForm(FlaskForm):
     SName = StringField("Surname", validators=[DataRequired(), Length(min=4,max=45)])
     FName = StringField("firstName",validators=[DataRequired(), Length(min=4,max=45)])
     submit = SubmitField("Submit")
-    submit1 = SubmitField("Exit")
 
 
 class DelForm(FlaskForm): 
-    Stud_id = StringField("Student Id", validators=[DataRequired(), Length(min=8,max=8), Regexp("x\d{7}") ])
+    Stud_id = StringField("Student Id", validators=[DataRequired(), EqualTo('Stud_id1', message='student id must match'), Length(min=8,max=8), Regexp("x\d{7}") ])
+    Stud_id1= StringField("Confirm Id", validators=[DataRequired(), Length(min=8,max=8), Regexp("x\d{7}") ])
     delete = SubmitField("Delete")
     submit = SubmitField("Exit")
 

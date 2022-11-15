@@ -31,15 +31,9 @@
                                  {% endfor %}
                             </table>                           
                        </div>
-                          <div class='form'>
-                            <form method='POST' action=''>
-                               {{ jioptionform.hidden_tag() }}
-                             <div class="form-group" >
-                               {{ jioptionform.label}} {{ jioptionform.list}} 
-                               {{ jioptionform.submit }}  
-                             </div>
-                           </form>
-                        </div>  
+                       <div class="form-group">
+                        <a href="{{url_for('start') }}"> <br>EXIT THIS PAGE</a>
+                     </div>   
                         <div class='form'>
                             <form method='POST' action=''>
                                {{ jistudentform.hidden_tag() }}
@@ -57,7 +51,5 @@
                              </div>
                          </form>
                         </div>
-          {% block body %}
-          {% endblock body %}
     </body>
 </html>

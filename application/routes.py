@@ -24,15 +24,6 @@ def select_list(passdata):
              return redirect(url_for('readstudent'))
         elif passdata.list.data=='Home Page':
              return redirect(url_for('start'))  
-#*******************************************************************
-
-# def exitbut():
-          
-#           if  request.method == 'POST':
-#              return redirect(url_for('start'))
-#           else:
-#               0
-
 
 #*****************************************************************************************
 
@@ -40,8 +31,6 @@ def select_list(passdata):
 @app.route('/', methods = ['GET','POST'])
 def start():
     pyoptionform= SelectFieldForm()
-   # return redirect(url_for('read'))
-    #if request.method == 'POST':
     if pyoptionform.validate_on_submit():
        return select_list(pyoptionform)
     return render_template('home.html', jioptionform=pyoptionform)
@@ -51,12 +40,11 @@ def start():
 #************GET ALL STUDENT FROM DATABASE*******************************************
 @app.route('/students', methods= ['GET','POST'])
 def read_all_student():
-    pyall_students = student.query.all()
-    pyoptionform= SelectFieldForm()
-   # if request.method == 'POST':
-    if pyoptionform.validate_on_submit():
-        return select_list(pyoptionform)
-    return render_template('allstudent.html', ji_all_student=pyall_students, jioptionform=pyoptionform)
+        pyall_students = student.query.all()
+        pyoptionform= SelectFieldForm()
+        if request.method == 'POST':
+           return select_list(pyoptionform)
+        return render_template('allstudent.html', ji_all_student=pyall_students, jioptionform=pyoptionform)
 
 #**************************************************************************************
 
@@ -64,12 +52,11 @@ def read_all_student():
 
 @app.route('/moodle', methods= ['GET','POST'])
 def read_all_moodle():
-    pyall_moodle = moodle.query.all()
-    pyoptionform1= SelectFieldForm()
-    #if request.method == 'POST':
-    if pyoptionform1.validate_on_submit():
-      return select_list(pyoptionform1)
-    return render_template('allmoodle.html', ji_all_moodle= pyall_moodle, jioptionform1=pyoptionform1)
+       pyall_moodle = moodle.query.all()
+       pyoptionform1= SelectFieldForm()
+       if request.method == 'POST':
+           return select_list(pyoptionform1)
+       return render_template('allmoodle.html', ji_all_moodle= pyall_moodle, jioptionform1=pyoptionform1)
 
 #********************************************************************************************
 
@@ -78,20 +65,13 @@ def read_all_moodle():
 @app.route('/regstudent', methods = ['GET','POST'])
 def register_student():
     pystudentform = NameForm()
-    if     request.method == 'POST':
-             return redirect(url_for('start'))
-    else:
-    #  pystudentform = NameForm()
-      #    if request.method == 'POST':
-          if pystudentform.validate_on_submit():
+    if pystudentform.validate_on_submit():
              addstudent = student(student_id=pystudentform.Stud_id.data, surname=pystudentform.SName.data,firstName=pystudentform.FName.data )
              schooldb.session.add(addstudent)
              schooldb.session.commit()
-             return redirect(url_for('start'))
-          else:
-               return redirect(url_for('start'))
-              #return render_template('error.html', jistudentform=pystudentform)
-    
+             return render_template('confirmation.html')
+    elif     request.method == 'POST':
+              return render_template('error.html')
     return render_template('registerstudent.html', jistudentform=pystudentform)
 
 
@@ -100,26 +80,22 @@ def register_student():
 #****************DELETE ENTRY FROM THE STUDENT TABLE*******************
 @app.route('/A', methods = ['GET','POST'])
 def delstudent():
-        if  request.method == 'POST':
-            return redirect(url_for('start'))
-        else:
-              # exitbut()
-            pyall_students = student.query.all()
-            pydelstudentform=DelForm()
-            #if request.method == 'POST':
-            if pydelstudentform.validate_on_submit():
-                delmoodle = moodle.query.filter_by(student_id=pydelstudentform.Stud_id.data).all()
-                for k in delmoodle:
+        pystudentform = NameForm()
+        pyall_students = student.query.all()
+        pydelstudentform=DelForm()
+        if pydelstudentform.validate_on_submit():
+           delmoodle = moodle.query.filter_by(student_id=pydelstudentform.Stud_id.data).all()
+           for k in delmoodle:
                    schooldb.session.delete(k)            
-                   schooldb.session.commit()
-                   delstudent = student.query.filter_by(student_id=pydelstudentform.Stud_id.data).first()
-                   schooldb.session.delete(delstudent)
-                   schooldb.session.commit()
-                return redirect(url_for('start'))
+           schooldb.session.commit()
+           delstudent = student.query.filter_by(student_id=pydelstudentform.Stud_id.data).first()
+           if delstudent: 
+              schooldb.session.delete(delstudent)
+           schooldb.session.commit()
+           return render_template('confirmation.html')
+        elif  request.method == 'POST':
+             return render_template('error1.html')
         return render_template('deletebut.html', ji_all_student=pyall_students,jidelstudentform=pydelstudentform )
-        
-            
-
                                                                             
 #********************************************************************************************
 
@@ -127,11 +103,7 @@ def delstudent():
 
 @app.route('/studmod', methods=['GET','POST'])
 def readstudent():
-        # if  request.method == 'POST':
-        #      return redirect(url_for('start'))
-        # else:
              pystudentform=SinForm()
-             #if request.method == 'POST':
              if pystudentform.validate_on_submit():
                    student_id=pystudentform.Stud_id.data
                    return redirect(url_for('readresult',student_id1= student_id))
@@ -139,14 +111,13 @@ def readstudent():
 
 @app.route('/studmod1/<student_id1>', methods=['GET','POST'])
 def readresult(student_id1):
-         pyoptionform= SelectFieldForm()
-         pystudentform=SinForm()
-         if request.method == 'GET':
+             pyoptionform= SelectFieldForm()
              studmoodle = moodle.query.filter_by(student_id=student_id1).all()
              pystudent = student.query.filter_by(student_id=student_id1).all()
-             return render_template('readresult.html', ji_student=pystudent, ji_moodle= studmoodle, jioptionform= pyoptionform)
-         if request.method == 'POST':
-               return select_list(pyoptionform)
+             if pystudent:
+                return render_template('readresult.html', ji_student=pystudent, ji_moodle= studmoodle, jioptionform= pyoptionform)
+             else:
+                  return render_template('error2.html') 
 
 #*****************************************************************************************
 
@@ -154,56 +125,42 @@ def readresult(student_id1):
 
 @app.route('/studmodm', methods=['GET','POST'])
 def update():
-        if  request.method == 'POST':
-            return redirect(url_for('start'))
-        else:
-           #  exitbut()
              pystudentform=SinForm()
-            # if request.method == 'POST':
              if pystudentform.validate_on_submit():
-               student_id=pystudentform.Stud_id.data
-               return redirect(url_for('register_student1',student_id1= student_id))
-        return render_template('singlestud.html', jistudentform=pystudentform,)
+                  student_id=pystudentform.Stud_id.data
+                  return redirect(url_for('register_student1',student_id1= student_id))
+             return render_template('singlestud.html', jistudentform=pystudentform,)
 
 @app.route('/studmod2/<student_id1>', methods=['GET','POST'])
 def register_student1(student_id1):
-    pyoptionform= SelectFieldForm()
-    pystudentform = NameForm()
-    if request.method == 'GET':
+         pyoptionform= SelectFieldForm()
+         pystudentform = NameForm()
          studmoodle = moodle.query.filter_by(student_id=student_id1).all()
          pystudent = student.query.filter_by(student_id=student_id1).first()
-         return render_template('update.html', ji_student=pystudent, ji_moodle= studmoodle, jioptionform= pyoptionform, jistudentform=pystudentform)
-    #if request.method == 'POST':
-    if pyoptionform.validate_on_submit():
-        studmoodle = moodle.query.filter_by(student_id=student_id1).all()
-        for k in studmoodle:
-            schooldb.session.delete(k)            
+         if pystudentform.validate_on_submit():
+            pystudent.student_id = pystudentform.Stud_id.data 
+            pystudent.surname = pystudentform.SName.data
+            pystudent.firstName = pystudentform.FName.data
             schooldb.session.commit()
-        pystudent = student.query.filter_by(student_id=student_id1).first()
-        schooldb.session.delete(pystudent)
-        schooldb.session.commit()
-        addstudent = student(student_id=pystudentform.Stud_id.data, surname=pystudentform.SName.data,firstName=pystudentform.FName.data )
-        schooldb.session.add(addstudent)
-        schooldb.session.commit()
-        return redirect(url_for('start'))
+            return render_template('confirmation.html')
+         elif pystudent:
+            return render_template('update.html', ji_student=pystudent, ji_moodle= studmoodle, jioptionform= pyoptionform, jistudentform=pystudentform)
+         return render_template('error.html')
+        
 # ***************************************************************************************************
 
 #*****************MOODLE REGISTRATION PAGE***********************************************
 
 @app.route('/regmoodle', methods = ['GET','POST'])
 def register_moodle():
-    if  request.method == 'POST':
-        return redirect(url_for('start'))
-    else:
-       # exitbut()
         pymodform = MoodleForm()
-        #if request.method == 'POST':
-        if pymodform.validate_on_submit():
-           addmoodle = moodle(student_id=pymodform.Stud_id.data, moodle_id=pymodform.Modcode.data, moodleName=pymodform.Subname.data )
-           schooldb.session.add(addmoodle)
-           schooldb.session.commit()
-           return redirect(url_for('start'))
-    return render_template('regmoodle.html', jimodform=pymodform)
-
+        if    pymodform.validate_on_submit():
+              addmoodle = moodle(student_id=pymodform.Stud_id.data, moodle_id=pymodform.Modcode.data, moodleName=pymodform.Subname.data )
+              schooldb.session.add(addmoodle)
+              schooldb.session.commit()
+              return render_template('confirmation.html')
+        elif  request.method == 'POST':
+              return render_template('error.html')
+        return render_template('regmoodle.html', jimodform=pymodform)
 
 #******************************************************************************************
