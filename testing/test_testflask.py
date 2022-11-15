@@ -1,5 +1,6 @@
 from application import app, schooldb 
 from application.models import student, moodle
+from application.routes import select_list
 from flask_testing import TestCase
 from flask import request, redirect, url_for
 
@@ -83,16 +84,26 @@ class TestReadURL(TestBase):
            assert responsevar7.status_code==200
            responsevar9 = self.client.get(url_for('register_moodle'))
            assert responsevar9.status_code==200
+           responsevar10 = self.client.get(url_for('readresult' , student_id1='x0000012'))
+           assert responsevar10.status_code==200
+           responsevar11 = self.client.get(url_for('register_student1' , student_id1='x0000012'))
+           assert responsevar11.status_code==200
 
 
-      def test_200OK(self):
+
+      def test_2009OK(self):
+           responsevar0 = self.client.get(url_for('read_all_student'))
+           assert 'x0000012' in responsevar0.text
            responsevar1 = self.client.get(url_for('read_all_student'))
            assert 'John' in responsevar1.text
            responsevar2 = self.client.get(url_for('read_all_student'))
            assert 'Smith' in responsevar2.text
            responsevar3 = self.client.get(url_for('read_all_moodle'))
            assert 'Eng100' in responsevar3.text
+           responsevar4 = self.client.get(url_for('read_all_moodle'))
+           assert 'English' in responsevar4.text
 
+           
 
 
 

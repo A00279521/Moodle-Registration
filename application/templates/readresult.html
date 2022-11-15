@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <body>
                 <div class="card-header text-center" style ="background-color:rgb(255, 0, 47);">
-                  <h1> THE START OF A JOURNEY</h1>
+                  <h1> THE STUDENT INFORMATION PAGE</h1>
                 </div>
                  <div class="card-header text-center">
                         <table>
@@ -32,15 +32,12 @@
                             </table>                           
                        </div>
                           <div class='form'>
-                            <form method='POST' action=''>
-                               {{ jioptionform.hidden_tag() }}
-                             <div class="form-group" >
-                               {{ jioptionform.label}} {{ jioptionform.list}} 
-                               {{ jioptionform.submit }}  
+                            <form method='POST' action=''> 
+                               <div class="form-group">
+                                <a href="{{url_for('start') }}"> <br>EXIT THIS PAGE</a>
+                             </div>   
                              </div>
                            </form>
                         </div>      
-          {% block body %}
-          {% endblock body %}
     </body>
 </html>
