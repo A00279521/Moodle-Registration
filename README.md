@@ -21,7 +21,11 @@
   PICTURE of the ERD diagram
   https://github.com/A00279521/Moodle-Registration/blob/photoBranch/ERD_diagram.png
   
- ##ADDITIONAL REQUIREMENT FROM PRODUCT OWNER
+  Link to Risk Assessment file.
+   https://github.com/A00279521/Moodle-Registration/blob/photoBranch/Risk_assessment.xlsx
+
+ 
+ ##  ADDITIONAL REQUIREMENT FROM PRODUCT OWNER
    * After the MVP the product owner has requested further fuctionality as listed below
    * The ability to delete a student from the student table 
    * The ability to update/modify the student table 
